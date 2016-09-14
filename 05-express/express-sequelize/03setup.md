@@ -32,7 +32,7 @@ npm install --save express ejs body-parser pg pg-hstore sequelize
 Create a database and initialize a sequelize project
 
 ```
-createdb userapp
+createdb userapp_development
 sequelize init
 ```
 
