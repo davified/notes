@@ -87,7 +87,7 @@ then we need to update our `index.ejs` to use a templating variable.
 
 The JavaScript being embedded is enclosed by the `<% %>` tags. The addition of the `=` sign on the opening tag means that a value will be printed to the screen. We can also use the following signs to tell EJS to parse code in different ways:
 
-* `<- name %>` will print out the expression without escaping HTML
+* `<%- name %>` will print out the expression without escaping HTML
   * If the name was `"<span>Sterling Archer</span>"`, then the `<span>` elements won't be escaped.
 * `<% name %>` will not print out the expression, but it will execute it
   * Handy for `if` statements and loops
