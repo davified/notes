@@ -1,9 +1,12 @@
 ## Lab schedule
 
-### Week 3
+### Week 4
 | Day | Topic  | Lab |
 | ----| ------ | ---- |
+| Thursday | AJAX | AJAX Car API and Filter |
+| Tuesday | Morning Exercise | [URL Encode](https://gist.github.com/geluso/5388d0a83fdfb56a4b84c98d2aad5f8b)|
 | Monday | OOP | [Prototype Body Shop][1020]|
+| Monday | AJAX | [Reddit JSON Image Search][0130]|
 
 ### Week 2
 
@@ -31,3 +34,4 @@
 [1004]: https://github.com/davified/js-control-flow
 [1007]: https://github.com/davified/js-functions
 [1020]: https://github.com/WDI-SEA/oop-prototype-car
+[0130]: https://github.com/ga-students/reddit-json-image-search-results
