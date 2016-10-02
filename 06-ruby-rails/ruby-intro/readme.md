@@ -258,7 +258,7 @@ numbers.delete_at(0)
 numbers
 # => [1, 5, 6, 7, 8, 9]
 ```
-  
+
 ### Ranges
 A set of values with a beginning and an end
 
@@ -482,9 +482,9 @@ foods.each_with_index do |vegetable, i|
 end
 
 # Will _each_ print out:
-# >i like carrots
-# >i like kale
-# >i like beets
+# >i like carrots, 0
+# >i like kale, 1
+# >i like beets, 2
 ```
 
 #### Enumerables
