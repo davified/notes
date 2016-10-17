@@ -241,6 +241,7 @@
   * [Portfolio](11-projects/portfolio/readme.md)
 * [Resources](12-resources/readme.md)
   * [External Resources](12-resources/external-resources.md)
+  * [Job tips](12-resources/job-tips.md)
   * [APIs and Data](12-resources/apis.md)
   * [Tech Websites](12-resources/techsites.md)
   * [PostgreSQL Cheat Sheet](12-resources/sqlcheatsheet.md)
