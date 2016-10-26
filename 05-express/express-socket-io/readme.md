@@ -1,17 +1,17 @@
 # Websockets with socket.io
 
-##Objectives
+## Objectives
 
-* Describe what realtime means, and how channels & open sockets push data to clients
-* Set up websockets on the server side
-* Use jQuery to update the client side
+- Describe what realtime means, and how channels & open sockets push data to clients
+- Set up websockets on the server side
+- Use jQuery to update the client side
 
-###Getting Started
+### Getting Started
 
 **NOTE: There are two options for this lesson**
 
-1. Access the starter code for the codealong here: https://github.com/WDI-SEA/socket-io-starter
-2. Follow the Socket.io chat example, which illustrates sending and receiving messages on both the client and server: http://socket.io/get-started/chat/
+1. Access the starter code for the codealong here: <https://github.com/WDI-SEA/socket-io-starter>
+2. Follow the Socket.io chat example, which illustrates sending and receiving messages on both the client and server: <http://socket.io/get-started/chat/>
 
 ## Web basics recap
 
@@ -27,7 +27,7 @@ Alas! In comes polling! The client can keep 'polling' the server to see if it ha
 
 It's slow! Polling every `n` seconds isn't ideal, and if you poll too often, your bandwidth will go through the roof and slow your application down.
 
-#### Enter Websockets
+### Enter Websockets
 
 WebSockets solves all this. It maintains an open connection from Server <-> Client that we can use to 'push' information and get information, constantly, like push notifications on your phone (Gmail through Mail.app example).
 
@@ -37,7 +37,7 @@ Unlike HTTP requests, once a connection is established with websockets, you don'
 
 ## Installing WebSockets
 
-We're going to add functionality to our application that will pull a constant stream of tweets from Twitter's API. First thing we need is to install the [socket.io](http://socket.io) package.  Jump into the starter code folder and:
+We're going to add functionality to our application that will pull a constant stream of tweets from Twitter's API. First thing we need is to install the [socket.io](http://socket.io) package. Jump into the starter code folder and:
 
 ```bash
 npm install --save socket.io
@@ -45,7 +45,7 @@ npm install --save socket.io
 
 Then, require it in our app with a few changes. First let's add a new require for the _http_ module which gives us the server that socket.io needs to listen to. In `index.js`
 
-```js
+```javascript
 var express = require('express');
 var app = express();
 
@@ -53,23 +53,23 @@ var app = express();
 var http = require('http').Server(app);
 ```
 
-#### What's the difference between app & require('http')
+### What's the difference between app & require('http')
 
 This second way - creating an HTTP server yourself instead of having Express create one for you - is useful if you want to reuse the HTTP server, for example to run socket.io within the same HTTP server instance:
 
-We need change at the bottom from `app` to `server`:
+We need change at the bottom from `app` to `http`:
 
-```js
+```javascript
 http.listen(port);
 ```
 
 Also, add to `index.js` below the `http` variable:
 
-```js
+```javascript
 var io = require('socket.io')(http);
 ```
 
-#### Add Twitter Streaming API
+### Add Twitter Streaming API
 
 Great! We're also going to using another module called [twit](https://github.com/ttezel/twit) to use with the Twitter Streaming API.
 
@@ -79,11 +79,11 @@ npm install --save twit
 
 And add to your `index.js` at the top:
 
-```js
+```javascript
 var Twit = require('twit');
 ```
 
-##  Setting up our Twitter app
+## Setting up our Twitter app
 
 To make any of our apps work with Twitter, we need to declare our app as a Twitter application using apps.twitter.com.
 
@@ -91,7 +91,7 @@ Let's go to [Twitter](https://apps.twitter.com) and create a new 'app':
 
 - **Name:** express-twitter-stream (you'll have to change this to something unique)
 - **Description:** Small app to stream tweets from Twitter.
-- **Website:** http://127.0.0.1
+- **Website:** <http://127.0.0.1>
 
 Then, navigate to **Keys and Access Tokens**, generate **My Access Token**, and copy the keys into a `.env` file like so:
 
@@ -102,18 +102,17 @@ TWITTER_ACCESS_TOKEN=insertkeyhere
 TWITTER_ACCESS_TOKEN_SECRET=insertkeyhere
 ```
 
-
 ## Instantiate new Twitter
 
 In JS, we can access environment variables using the following syntax:
 
-```js
+```javascript
 process.env.VARIABLE_NAME
 ```
 
 Create new Twit client in `index.js`:
 
-```js
+```javascript
 var twitter = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -124,17 +123,17 @@ var twitter = new Twit({
 
 You can console log this to see if it has worked. Don't forget to run `foreman`!:
 
-```js
+```javascript
 console.log(twitter);
 ```
 
-#### Get Tweets with a websocket
+### Get Tweets with a websocket
 
 Now we set up our websocket on the server-side. There are a number of reserved words - connect, connection, message, disconnect - that can't be used elsewhere. We want our tweets to stream when we connect to the page so we open a _connect_ channel.
 
 Inside, we set up our tweet socket and finally we _emit_ our _tweet_ on the _tweets_ channel.
 
-```js
+```javascript
 io.on('connect', function(socket) {
   var stream = twitter.stream('statuses/filter', { track: 'javascript' });
 
@@ -146,8 +145,7 @@ io.on('connect', function(socket) {
 
 Note that **socket** refers to an individual connection, while **io** refers to all socket connections. Keep this in mind when emitting data.
 
-
-#### Client Side
+### Client Side
 
 Now that's the server side sorted, now let's do the client. Open up our `layout.ejs` and add a few things - jQuery, our socket.io library and an empty JS file:
 
@@ -159,7 +157,7 @@ Now that's the server side sorted, now let's do the client. Open up our `layout.
 
 Notice that the path is relative - that's being done for you by Node.
 
-#### Let's check in Chrome's console
+### Let's check in Chrome's console
 
 Open up Chrome's console using `cmd+alt+j`
 
@@ -170,7 +168,7 @@ Open up Chrome's console using `cmd+alt+j`
 
 Then in `script.js`, add in our receiving code:
 
-```js
+```javascript
 var socket = io();
 
 socket.on('connect', function() {
@@ -190,11 +188,11 @@ We use one of the reserved events ('connect') to log out the fact we are connect
 
 This is great! We now have own tweets streaming but only to the console. Let's get it on the page with some jQuery.
 
-#### Back to the server-side
+### Back to the server-side
 
 Go back to our `index.js` and tidy up the tweet data we're sending through:
 
-```js
+```javascript
 io.on('connect', function(socket) {
   stream.on('tweet', function(tweet) {
     var data = {};
@@ -209,7 +207,7 @@ io.on('connect', function(socket) {
 
 Note the change to: `socket.emit('tweets', data);`
 
-#### Let's change the views
+### Let's change the views
 
 Add a container in `index.ejs`:
 
@@ -219,7 +217,7 @@ Add a container in `index.ejs`:
 
 Render the tweets with jQuery and amend `script.js`:
 
-```js
+```javascript
 var socket = io();
 
 socket.on('connect', function() {
@@ -238,11 +236,15 @@ $(function() {
 
 The Twitter stream should now be working. Try opening up another browser window and see all the browser windows update in real time.
 
-##Additional Resources
+## Additional Resources
 
-* [Socket.io Chat App](http://socket.io/get-started/chat/)
-  * Great example of two-way event emission
-* [Socket.io docs](http://socket.io/docs/)
-* [Twit module](https://github.com/ttezel/twit)
-* [How Facebook and Gmail implement real time notifications](http://stackoverflow.com/questions/1086380/how-does-facebook-gmail-send-the-real-time-notification)
-  * Note that websockets are a HTML5 spec, and there must be fallbacks (like long polling) for browsers that don't support websockets.
+- [Socket.io Chat App](http://socket.io/get-started/chat/)
+
+  - Great example of two-way event emission
+
+- [Socket.io docs](http://socket.io/docs/)
+
+- [Twit module](https://github.com/ttezel/twit)
+- [How Facebook and Gmail implement real time notifications](http://stackoverflow.com/questions/1086380/how-does-facebook-gmail-send-the-real-time-notification)
+
+  - Note that websockets are a HTML5 spec, and there must be fallbacks (like long polling) for browsers that don't support websockets.
